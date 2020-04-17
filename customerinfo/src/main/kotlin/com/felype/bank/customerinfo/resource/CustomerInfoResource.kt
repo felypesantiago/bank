@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono
 @RequestMapping("/customers", produces = [MediaType.APPLICATION_JSON_VALUE])
 class CustomerInfoResource(private val customerService: CustomerService) {
 
-	@GetMapping("/{customerId}")
-	fun getCustomer(@PathVariable("customerId") id: Long): Mono<Customer> {
-		return customerService.getCustomer(id)
-	}
+    @GetMapping("/{customerId}")
+    fun getCustomer(@PathVariable("customerId") id: Long): Mono<Customer> {
+        return customerService.getCustomer(id)
+    }
 
 }

@@ -11,19 +11,19 @@ import reactor.core.publisher.Mono
 @Service
 class CustomerService(val customerRepository: CustomerRepository) {
 
-	fun getCustomer(id: Long): Mono<Customer> {
-		return Mono.fromCallable { customerRepository.findById(id).orElseThrow { CustomerNotFoundException() } }
-			.onErrorMap(handleErrors())
-	}
+    fun getCustomer(id: Long): Mono<Customer> {
+        return Mono.fromCallable { customerRepository.findById(id).orElseThrow { CustomerNotFoundException() } }
+                .onErrorMap(handleErrors())
+    }
 
-	private fun handleErrors(): (Throwable) -> Throwable {
-		return { throwable ->
-			when (throwable) {
-				is CustomerNotFoundException -> throwable
-				is EmptyResultDataAccessException -> CustomerNotFoundException()
-				else -> BackendServiceException(throwable)
-			}
-		}
-	}
+    private fun handleErrors(): (Throwable) -> Throwable {
+        return { throwable ->
+            when (throwable) {
+                is CustomerNotFoundException -> throwable
+                is EmptyResultDataAccessException -> CustomerNotFoundException()
+                else -> BackendServiceException(throwable)
+            }
+        }
+    }
 
 }

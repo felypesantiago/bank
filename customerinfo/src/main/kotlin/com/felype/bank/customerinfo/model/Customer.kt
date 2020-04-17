@@ -8,5 +8,5 @@ import javax.persistence.*
 @Entity
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
 @Table(name = "customers")
-data class Customer(@GeneratedValue(strategy = GenerationType.IDENTITY) @Id val id : Long,
-					val firstName : String, val lastName : String, val ssn : String, val birthDate : LocalDate)
+data class Customer(@GeneratedValue(strategy = GenerationType.IDENTITY) @Id val id: Long,
+                    val firstName: String, val lastName: String, val ssn: String, val birthDate: LocalDate)

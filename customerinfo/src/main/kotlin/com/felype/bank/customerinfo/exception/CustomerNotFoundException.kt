@@ -1,3 +1,3 @@
 package com.felype.bank.customerinfo.exception
 
-class CustomerNotFoundException() : RuntimeException()
+class CustomerNotFoundException : RuntimeException()

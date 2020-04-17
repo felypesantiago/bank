@@ -1,3 +1,3 @@
 package com.felype.bank.customerinfo.exception
 
-public class BackendServiceException(cause: Throwable) : RuntimeException(cause)
+class BackendServiceException(cause: Throwable) : RuntimeException(cause)

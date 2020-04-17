@@ -1,51 +1,50 @@
 package com.felype.bank.customerinfo.service
 
-import org.mockito.junit.MockitoJUnitRunner
+import com.felype.bank.customerinfo.exception.BackendServiceException
+import com.felype.bank.customerinfo.exception.CustomerNotFoundException
+import com.felype.bank.customerinfo.mock.MockObjects
+import com.felype.bank.customerinfo.resource.CustomerRepository
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import com.felype.bank.customerinfo.resource.CustomerRepository
-import org.junit.Test
-import com.felype.bank.customerinfo.model.Customer
-import com.felype.bank.customerinfo.mock.MockObjects
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.any
-import java.util.Optional
+import org.mockito.junit.MockitoJUnitRunner
 import reactor.test.StepVerifier
-import com.felype.bank.customerinfo.exception.CustomerNotFoundException
-import com.felype.bank.customerinfo.exception.BackendServiceException
+import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class CustomerServiceTest {
-	
-	@InjectMocks
-	private lateinit var customerService : CustomerService
-	
-	@Mock
-	private lateinit var customerRepository : CustomerRepository
-	
-	@Test
-	fun testGetCustomer() {
-		val customer = MockObjects.customer()
 
-		Mockito.`when`(customerRepository.findById(any())).thenReturn(Optional.of(customer))
+    @InjectMocks
+    private lateinit var customerService: CustomerService
 
-		StepVerifier.create(customerService.getCustomer(customer.id)).expectNext(customer).verifyComplete()
-	}
+    @Mock
+    private lateinit var customerRepository: CustomerRepository
 
-	@Test
-	fun testGetCustomerNotFound() {
-		`when`(customerRepository.findById(any())).thenThrow(CustomerNotFoundException::class.java)
+    @Test
+    fun testGetCustomer() {
+        val customer = MockObjects.customer()
 
-		StepVerifier.create(customerService.getCustomer(5L)).expectError(CustomerNotFoundException::class.java).verify()
-	}
+        `when`(customerRepository.findById(any())).thenReturn(Optional.of(customer))
 
-	@Test
-	fun testGetCustomerUnexpectedError() {
-		`when`(customerRepository.findById(any())).thenThrow(RuntimeException::class.java);
+        StepVerifier.create(customerService.getCustomer(customer.id)).expectNext(customer).verifyComplete()
+    }
 
-		StepVerifier.create(customerService.getCustomer(5L)).expectError(BackendServiceException::class.java).verify()
-	}
-	
+    @Test
+    fun testGetCustomerNotFound() {
+        `when`(customerRepository.findById(any())).thenThrow(CustomerNotFoundException::class.java)
+
+        StepVerifier.create(customerService.getCustomer(5L)).expectError(CustomerNotFoundException::class.java).verify()
+    }
+
+    @Test
+    fun testGetCustomerUnexpectedError() {
+        `when`(customerRepository.findById(any())).thenThrow(RuntimeException::class.java)
+
+        StepVerifier.create(customerService.getCustomer(5L)).expectError(BackendServiceException::class.java).verify()
+    }
+
 }

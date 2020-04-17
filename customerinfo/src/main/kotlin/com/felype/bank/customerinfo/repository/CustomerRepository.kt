@@ -1,4 +1,4 @@
-package com.felype.bank.customerinfo.resource;
+package com.felype.bank.customerinfo.resource
 
 import com.felype.bank.customerinfo.model.Customer
 import org.springframework.data.repository.CrudRepository
